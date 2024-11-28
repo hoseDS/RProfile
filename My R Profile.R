@@ -131,8 +131,7 @@ load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, overwrite=FALSE, sta
   # Create INSERT SQL and Execute it
   print('Execute INSERT')
   sql_insert_base <- paste0('INSERT INTO ',my_table_name,' (',paste(col_names,collapse = ', '),') VALUES ')
-  # for (i in starting_row:nrow(df)) {
-  for (i in starting_row:(starting_row+100)) {
+  for (i in starting_row:nrow(df)) {
     sql_insert <-paste0(sql_insert_base,"('")
     for (j in 1:length(col_names)) {
       sql_insert <- paste0(sql_insert,df[i,j],"', '")
