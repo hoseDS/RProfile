@@ -77,7 +77,7 @@ library(ini)
 library(stringr)
 library(tidyverse)
 
-load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, overwrite=FALSE, starting_row=1) {
+load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, drop_existing=FALSE, starting_row=1) {
   
   # Get col types and names
   col_types <- unname(sapply(df, class))
@@ -85,9 +85,9 @@ load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, overwrite=FALSE, sta
   
   # Create CREATE TABLE SQL
   if (is_temp==TRUE) {
-    sql_create <- paste0('CREATE TEMP TABLE ',my_table_name,' (')
+    sql_create <- paste0('CREATE TEMP TABLE IF NOT EXISTS ',my_table_name,' (')
   } else {
-    sql_create <- paste0('CREATE TABLE ',my_table_name,' (')
+    sql_create <- paste0('CREATE TABLE IF NOT EXISTS ',my_table_name,' (')
   }
   for (i in 1:length(col_types)) {
     if (grepl(col_types[i], c('character'))) {
@@ -119,7 +119,7 @@ load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, overwrite=FALSE, sta
                    password=init_file_data$YB$pass)  
   
   # Execute DROP query on SQL Server
-  if (overwrite==TRUE){
+  if (drop_existing==TRUE){
     print('Execute DROP')
     dbExecute(con, sql_drop) 
   }
