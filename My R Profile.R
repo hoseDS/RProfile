@@ -41,7 +41,7 @@ library(DBI)
 library(RPostgres)
 library(ini)
 
-queryYB <- function(query) {
+queryYB <- function(sql_query, big=FALSE) {
   # Database info & credentials
   db <- 'py2jpta1'
   init_file_data<-read.ini("C:/Users/stewapatte/Python/common/config.ini", 
@@ -55,11 +55,27 @@ queryYB <- function(query) {
                    user=init_file_data$YB$user, 
                    password=init_file_data$YB$pass)  
   
-  # Query and show results
-  # sql_query_select<-'SELECT * FROM StewartShouhin;'
-  sql_query_select<-query
-  df1 <- dbGetQuery(con, sql_query_select) # filter down our data set 
-  # print(df1)
+  # Run SQL query on database
+  if (big==FALSE) {
+    df1 <- dbGetQuery(con, sql_query) # filter down our data set 
+    # If query is big, run it in chunks using LIMIT and OFFSET
+  } else {
+    rows_returned <- 5000000
+    n <- 0
+    print(paste0('Starting Iteration ',n+1,' at ',now()))
+    while (rows_returned>=5000000) {
+      n <- n + 1
+      sql_query_limit <- paste0(sql_query,' ORDER BY 1 LIMIT 5000000 OFFSET ',(n-1)*5000000)
+      if (n==1) {
+        df1 <- dbGetQuery(con, sql_query_limit) # filter down our data set 
+        rows_returned <- nrow(df1)
+      } else {
+        df_new <- dbGetQuery(con, sql_query_limit)
+        df1 <- rbind(df1,df_new)
+        rows_returned <- nrow(df_new)
+      }
+    }
+  }
   
   # Close connection
   dbDisconnect(con)
