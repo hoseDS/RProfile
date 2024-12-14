@@ -205,3 +205,9 @@ load_df_to_yb <- function(df, my_table_name, is_temp=FALSE, drop_existing=FALSE,
   # Close connection
   dbDisconnect(con)
 }
+
+#===========================================================================
+# Prevent dplyr::filter from being masked
+#===========================================================================
+
+filter <- dplyr::filter
