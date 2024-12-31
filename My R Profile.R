@@ -40,32 +40,12 @@ substitute_common_parameters <- function(this_sql_line, common_parameters) {
 #===========================================================================
 
 library(yaml)
+library(readr)
 
 getSQL <- function(filepath){
-  con = file(filepath, "r")
-  sql.string <- ""
+  line <- read_file(filepath)
   common_parameters = yaml.load_file("C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/ドキュメント/Code Chunks/RProfile/common_parameters.yml")
-  
-  while (TRUE){
-    line <- readLines(con, n = 1)
-    
-    if ( length(line) == 0 ){
-      break
-    }
-    
-    line <- gsub("\\t", " ", line)
-    
-    line <- substitute_common_parameters(line, common_parameters)
-    
-    if(grepl("--",line) == TRUE){
-      line <- paste(sub("--","/*",line),"*/")
-    }
-    
-    sql.string <- paste(sql.string, line)
-  }
-  
-  close(con)
-  return(sql.string)
+  line <- substitute_common_parameters(line, common_parameters)
 }
 
 #===========================================================================
