@@ -24,7 +24,7 @@ system('python "C:\\Users\\stewapatte\\OneDrive - Catalina Marketing Japan K.K\\
 substitute_common_parameters <- function(this_sql_line, common_parameters) {
   this_sql_line<-gsub("\\{common.common_criteria\\(\'tp\'\\)\\}", common_parameters$common_criteria_tp, this_sql_line)
   this_sql_line<-gsub("\\{common.common_chain_exclude\\(\'tp\'\\)\\}", common_parameters$common_chain_exclude_tp, this_sql_line)
-  this_sql_line<-gsub("\\{common.common_exclude_ord_event_key_tbl.*\\}", common_parameters$common_exclude_ord_event_key_tbl, this_sql_line)
+  this_sql_line<-gsub("\\{common.common_exclude_ord_event_key_tbl.+?\\}", common_parameters$common_exclude_ord_event_key_tbl, this_sql_line)
   this_sql_line<-gsub("\\{common.common_event_dist\\(\'dst\' *, *\'pv\'\\)\\}", common_parameters$common_event_dist_dst_pv, this_sql_line)
   this_sql_line<-gsub("\\{common.common_event_dist\\(\'dst\'\\)\\}", common_parameters$common_event_dist_dst, this_sql_line)
   this_sql_line<-gsub("\\{common.common_id_filter\\(\'pos\'\\)\\}", common_parameters$common_id_filter_pos, this_sql_line)
