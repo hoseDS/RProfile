@@ -102,6 +102,27 @@ queryYB <- function(sql_query, big=FALSE) {
 # Load dataframe to yellowbrick function
 #===========================================================================
 
+library(RODBC)
+
+querySF <- function(my_query) {
+  
+  # Open connection
+  conn <- odbcConnect("SnowflakeXS", pwd = 'Acne92w6f')
+  
+  # Query for data
+  df1<-sqlQuery(conn, my_query)
+  
+  # Close connection
+  odbcClose(conn)
+  
+  # Return data 
+  return(df1)
+}
+
+#===========================================================================
+# Load dataframe to yellowbrick function
+#===========================================================================
+
 library(DBI)
 library(RPostgres)
 library(ini)
