@@ -18,6 +18,5 @@ data=dict(
   common_event_ctrl_dst_pv = common.common_event_ctrl('dst', 'pv'),
   common_event_red_red_pv = common.common_event_red('red', 'pv')
 )
-yaml_filepath='C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/ドキュメント/Code Chunks/RProfile/common_parameters.yml'
 with open(yaml_filepath, 'w') as outfile:
   yaml.dump(data, outfile, default_flow_style=False)

@@ -12,10 +12,8 @@ options(scipen=999)
 library(yaml)
 
 # Run python script in subprocess to fetch common parameters and store in yaml
-system('python "C:\\Users\\stewapatte\\OneDrive - Catalina Marketing Japan K.K\\ドキュメント\\Code Chunks\\RProfile\\get_common_parameters.py"', intern=TRUE)
 
 # Read yaml
-# common_parameters <- yaml.load_file("C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/ドキュメント/Code Chunks/RProfile/common_parameters.yml")
 
 #===========================================================================
 # Substitute common parameters for yellowbrick queries in a string
@@ -44,7 +42,6 @@ library(readr)
 
 getSQL <- function(filepath){
   line <- read_file(filepath)
-  common_parameters = yaml.load_file("C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/ドキュメント/Code Chunks/RProfile/common_parameters.yml")
   line <- substitute_common_parameters(line, common_parameters)
 }
 
