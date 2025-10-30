@@ -125,6 +125,7 @@ library(RODBC)
 querySF <- function(my_query) {
   
   # Open connection
+  conn <- odbcConnect("Snowflake_DSN", pwd = 'XXXX')
   
   # Query for data
   df1<-sqlQuery(conn, my_query)
