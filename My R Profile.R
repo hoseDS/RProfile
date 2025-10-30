@@ -50,14 +50,15 @@ getSQL <- function(filepath){
 }
 
 #===========================================================================
-# Query yellowbrick (get query)
+# Get yellowbrick Connection
 #===========================================================================
 
 library(DBI)
 library(RPostgres)
 library(ini)
 
-queryYB <- function(sql_query, big=FALSE) {
+get_yb_conn <- function() {
+  
   # Database info & credentials
   db <- 'py2jpta1'
   init_file_data<-read.ini("C:/Users/stewapatte/Python/common/config.ini", 
@@ -71,6 +72,22 @@ queryYB <- function(sql_query, big=FALSE) {
                    user=init_file_data$YB$user, 
                    password=init_file_data$YB$pass)  
   
+  return(con)
+
+}
+
+#===========================================================================
+# Query yellowbrick (get query)
+#===========================================================================
+
+library(DBI)
+library(RPostgres)
+library(ini)
+
+queryYB <- function(sql_query, big=FALSE, order_by="1") {
+
+  con <- get_yb_conn()
+  
   # Run SQL query on database
   if (big==FALSE) {
     df1 <- dbGetQuery(con, sql_query) # filter down our data set 
@@ -81,7 +98,6 @@ queryYB <- function(sql_query, big=FALSE) {
     while (rows_returned>=5000000) {
       n <- n + 1
       print(paste0('Starting Iteration ',n,' at ',now()))
-      sql_query_limit <- paste0(sql_query,' ORDER BY 1 LIMIT 5000000 OFFSET ',(n-1)*5000000)
       sql_query_limit <- paste0(sql_query,' ORDER BY ', order_by, ' LIMIT 5000000 OFFSET ',(n-1)*5000000)
       if (n==1) {
         df1 <- dbGetQuery(con, sql_query_limit) # filter down our data set 
