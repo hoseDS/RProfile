@@ -82,6 +82,7 @@ queryYB <- function(sql_query, big=FALSE) {
       n <- n + 1
       print(paste0('Starting Iteration ',n,' at ',now()))
       sql_query_limit <- paste0(sql_query,' ORDER BY 1 LIMIT 5000000 OFFSET ',(n-1)*5000000)
+      sql_query_limit <- paste0(sql_query,' ORDER BY ', order_by, ' LIMIT 5000000 OFFSET ',(n-1)*5000000)
       if (n==1) {
         df1 <- dbGetQuery(con, sql_query_limit) # filter down our data set 
         rows_returned <- nrow(df1)
