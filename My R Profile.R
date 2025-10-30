@@ -15,12 +15,14 @@ library(yaml)
 system('python "C:\\Users\\stewapatte\\OneDrive - Catalina Marketing Japan K.K\\Documents\\Code Chunks\\RProfile\\get_common_parameters.py"', intern=TRUE)
 
 # Read yaml
+common_parameters <- yaml.load_file("C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/Documents/Code Chunks/RProfile/common_parameters.yml")
 
 #===========================================================================
 # Substitute common parameters for yellowbrick queries in a string
 #===========================================================================
 
 substitute_common_parameters <- function(this_sql_line, common_parameters) {
+  this_sql_line<-gsub("\\{bp\\}", common_parameters$common_bulk_pref, this_sql_line)
   this_sql_line<-gsub("\\{common.common_criteria\\(\'tp\'\\)\\}", common_parameters$common_criteria_tp, this_sql_line)
   this_sql_line<-gsub("\\{common.common_chain_exclude\\(\'tp\'\\)\\}", common_parameters$common_chain_exclude_tp, this_sql_line)
   this_sql_line<-gsub("\\{common.common_exclude_ord_event_key_tbl.+?\\}", common_parameters$common_exclude_ord_event_key_tbl, this_sql_line)
@@ -43,6 +45,7 @@ library(readr)
 
 getSQL <- function(filepath){
   line <- read_file(filepath)
+  common_parameters = yaml.load_file("C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/Documents/Code Chunks/RProfile/common_parameters.yml")
   line <- substitute_common_parameters(line, common_parameters)
 }
 
