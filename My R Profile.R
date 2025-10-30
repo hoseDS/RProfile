@@ -117,7 +117,7 @@ queryYB <- function(sql_query, big=FALSE, order_by="1") {
 }
 
 #===========================================================================
-# Load dataframe to yellowbrick function
+# Load dataframe from snowflake function
 #===========================================================================
 
 library(RODBC)
@@ -138,7 +138,7 @@ querySF <- function(my_query) {
 }
 
 #===========================================================================
-# Load dataframe to yellowbrick function
+# Load dataframe from yellowbrick function
 #===========================================================================
 
 library(DBI)
