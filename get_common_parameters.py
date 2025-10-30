@@ -7,6 +7,7 @@ import common  # type: ignore # Assuming common has necessary functions includin
 from common import * # type: ignore
 
 data=dict(
+  common_bulk_pref = common.bulk_pref,
   common_criteria_tp = common.common_criteria('tp'),
   common_chain_exclude_tp = common.common_chain_exclude('tp'),
   common_exclude_ord_event_key_tbl = common.common_exclude_ord_event_key_tbl(),
@@ -18,5 +19,6 @@ data=dict(
   common_event_ctrl_dst_pv = common.common_event_ctrl('dst', 'pv'),
   common_event_red_red_pv = common.common_event_red('red', 'pv')
 )
+yaml_filepath='C:/Users/stewapatte/OneDrive - Catalina Marketing Japan K.K/Documents/Code Chunks/RProfile/common_parameters.yml'
 with open(yaml_filepath, 'w') as outfile:
   yaml.dump(data, outfile, default_flow_style=False)

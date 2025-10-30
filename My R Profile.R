@@ -12,6 +12,7 @@ options(scipen=999)
 library(yaml)
 
 # Run python script in subprocess to fetch common parameters and store in yaml
+system('python "C:\\Users\\stewapatte\\OneDrive - Catalina Marketing Japan K.K\\Documents\\Code Chunks\\RProfile\\get_common_parameters.py"', intern=TRUE)
 
 # Read yaml
 
